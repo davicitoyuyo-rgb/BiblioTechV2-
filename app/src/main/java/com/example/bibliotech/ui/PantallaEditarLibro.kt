@@ -63,8 +63,8 @@ fun PantallaEditarLibro(
             Text("Editar Libro",color= Color.White)
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(value = titulo, onValueChange ={titulo=it},
-            label= {Text("Titulo")},
-            modifier= Modifier.fillMaxWidth(),
+                label= {Text("Titulo")},
+                modifier= Modifier.fillMaxWidth(),
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(value = autor, onValueChange ={autor=it},

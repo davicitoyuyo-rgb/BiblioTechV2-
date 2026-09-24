@@ -95,15 +95,15 @@ fun PantallaAgregarLibro(
                 label = { Text("autor") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.White),
-                        colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFF3B82F6),
-                unfocusedBorderColor = Color.White,
-                focusedLabelColor = Color(0xFF60A5FA),
-                unfocusedLabelColor = Color.LightGray,
-                cursorColor = Color.White,
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White
-            )
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color(0xFF3B82F6),
+                    unfocusedBorderColor = Color.White,
+                    focusedLabelColor = Color(0xFF60A5FA),
+                    unfocusedLabelColor = Color.LightGray,
+                    cursorColor = Color.White,
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White
+                )
             )
             Spacer(modifier = Modifier.height(12.dp))
 

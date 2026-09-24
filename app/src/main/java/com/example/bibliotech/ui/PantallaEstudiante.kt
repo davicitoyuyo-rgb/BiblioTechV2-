@@ -626,4 +626,3 @@ fun PantallaEstudiantes(
         }
     }
 }
-

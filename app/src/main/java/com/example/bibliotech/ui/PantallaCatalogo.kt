@@ -77,15 +77,8 @@ fun PantallaCatalogo(
     val libros by viewModel.libros.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope= rememberCoroutineScope ()
-
-
     LaunchedEffect(Unit) {
-
-
         viewModel.cargarLibros()
-
-
-
     }
     LaunchedEffect(mensaje) {
         if(mensaje != null){
@@ -93,25 +86,18 @@ fun PantallaCatalogo(
             onMensajeMostrado()
         }
     }
-
-
-
-var textoBusqueda by remember { mutableStateOf("") }
+    var textoBusqueda by remember { mutableStateOf("") }
     val categoria = listOf("Todas","Literatura","Novela","Programacion" )
     var categoriaSeleccionada by remember { mutableStateOf("Todas") }
     val librosFiltrados = libros.filter { libro ->
         val coincideTexto = libro.titulo.contains(textoBusqueda,
             ignoreCase = true) || libro.autor.contains(textoBusqueda,
-                ignoreCase = true)
+            ignoreCase = true)
         val coincideCategoria = categoriaSeleccionada =="Todas"||
                 libro.categoria == categoriaSeleccionada
         coincideTexto && coincideCategoria
 
     }
-
-
-
-
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -124,9 +110,9 @@ var textoBusqueda by remember { mutableStateOf("") }
                 }
             },
         topBar = {
-        TopAppBar(title = {Text("Catalogo de libros")})
-    }){
-        padding ->
+            TopAppBar(title = {Text("Catalogo de libros")})
+        }){
+            padding ->
         Column(
             modifier = Modifier.fillMaxSize().padding(padding).padding(5.dp)
                 .fillMaxSize()
@@ -186,6 +172,4 @@ var textoBusqueda by remember { mutableStateOf("") }
         }
     }
 
-    }
-
-
+}

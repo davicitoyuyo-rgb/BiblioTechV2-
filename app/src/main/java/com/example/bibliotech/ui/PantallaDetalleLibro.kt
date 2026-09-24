@@ -28,33 +28,56 @@ import com.example.bibliotech.R
 import android.R.attr.title
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun PantallaDetalleLibro(Libro:Libro,
                          onRegresar:()-> Unit,
                          onEditar:(Int) -> Unit,
                          onEliminar:(Libro) -> Unit,
+                         navController: NavController,
 ){
-var mostrarDialogo by remember { mutableStateOf(false) }
+    val snackbarHostState= remember { SnackbarHostState() }
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val mensaje=
+        backStackEntry
+            ?.savedStateHandle
+            ?.get<String>("mensaje")
+
+    LaunchedEffect(mensaje) {
+        if (mensaje != null){
+            snackbarHostState.showSnackbar(mensaje)
+            backStackEntry
+                ?.savedStateHandle
+                ?.remove<String>("mensaje")
+        }
+    }
+
+    var mostrarDialogo by remember { mutableStateOf(false) }
     @OptIn(ExperimentalMaterial3Api::class)
 
     Scaffold(containerColor = Color.Black,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBar(
-            title={
-                Text("Detalle libro",
-                    color=Color.White
+                title={
+                    Text("Detalle libro",
+                        color=Color.White
                     )
-       },
-colors = TopAppBarDefaults.topAppBarColors(
-    containerColor = Color.Black
-)
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Black
+                )
             )
 
         }) { paddingValues ->
