@@ -21,9 +21,7 @@ class EstudianteViewModel(application: Application) : AndroidViewModel(applicati
         (application as BibliotecaApplication).estudianteRepository
 
 
-    // =========================
-    // LISTA DE ESTUDIANTES
-    // =========================
+
     private val _estudiantes =
         MutableStateFlow<List<Estudiante>>(emptyList())
 
@@ -32,9 +30,6 @@ class EstudianteViewModel(application: Application) : AndroidViewModel(applicati
         _estudiantes.asStateFlow()
 
 
-    // =========================
-    // ESTUDIANTE SELECCIONADO
-    // =========================
     private val _estudianteSeleccionado =
         MutableStateFlow<Estudiante?>(null)
 
@@ -43,21 +38,12 @@ class EstudianteViewModel(application: Application) : AndroidViewModel(applicati
         _estudianteSeleccionado.asStateFlow()
 
 
-    // =========================
-    // READ
-    // Cargar todos los estudiantes
-    // =========================
     fun cargarEstudiantes() {
         viewModelScope.launch(Dispatchers.IO) {
             _estudiantes.value = repository.obtenerEstudiantes()
         }
     }
 
-
-    // =========================
-    // CREATE
-    // Insertar estudiante
-    // =========================
     fun insertarEstudiante(estudiante: Estudiante) {
         viewModelScope.launch(Dispatchers.IO) {
 
@@ -69,12 +55,6 @@ class EstudianteViewModel(application: Application) : AndroidViewModel(applicati
                 repository.obtenerEstudiantes()
         }
     }
-
-
-    // =========================
-    // READ
-    // Obtener un estudiante por ID
-    // =========================
     fun cargarEstudiantePorId(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
 
@@ -84,11 +64,6 @@ class EstudianteViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
-
-    // =========================
-    // UPDATE
-    // Actualizar estudiante
-    // =========================
     fun actualizarEstudiante(estudiante: Estudiante) {
 
 
@@ -107,11 +82,6 @@ class EstudianteViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
-
-    // =========================
-    // DELETE
-    // Eliminar estudiante
-    // =========================
     fun eliminarEstudiante(estudiante: Estudiante) {
 
 

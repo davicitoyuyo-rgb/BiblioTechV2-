@@ -3,6 +3,7 @@ package com.example.bibliotech
 import android.app.Application
 import com.example.bibliotech.data.BibliotecaDatabase
 import com.example.bibliotech.data.DatabaseProvider
+import com.example.bibliotech.data.EstudianteRepository
 import com.example.bibliotech.data.LibroRepository
 import com.example.bibliotech.data.LibrosPrueba
 import kotlinx.coroutines.CoroutineScope
@@ -18,11 +19,20 @@ class BibliotecaApplication : Application() {
         DatabaseProvider.getDatabase(this)
     }
 
+    // Configuración para Libros
     val libroDao
         get() = database.libroDao()
 
     val libroRepository: LibroRepository by lazy {
         LibroRepository(libroDao)
+    }
+
+    // Configuración para Estudiantes
+    val estudianteDao
+        get() = database.estudianteDao()
+
+    val estudianteRepository: EstudianteRepository by lazy {
+        EstudianteRepository(estudianteDao)
     }
 
     override fun onCreate() {

@@ -8,7 +8,7 @@ val LibrosPrueba = listOf(
 
         id=0,
         titulo = "El principito",
-        autor ="Antonio de la Garza",
+        autor ="Rene Antonio",
         categoria ="Literatura",
         anio =1943,
         descripcion = "sera",
@@ -20,7 +20,7 @@ val LibrosPrueba = listOf(
 
         id=0,
         titulo = "Fifty shadow of grey",
-        autor ="The Weekend",
+        autor ="Wiliam Mojica",
         categoria ="Literatura",
         anio =1943,
         descripcion = "sera",
@@ -45,9 +45,8 @@ val LibrosPrueba = listOf(
     autor ="Homero",
     categoria ="Poema Epico",
     anio =1542,
-                        descripcion = "sera",
+    descripcion = "sera",
                         disponible=true
-
 )
 
 )
