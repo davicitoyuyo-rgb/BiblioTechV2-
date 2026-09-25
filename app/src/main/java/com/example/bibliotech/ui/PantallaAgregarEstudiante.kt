@@ -1,6 +1,5 @@
 package com.example.bibliotech.ui
 
-import android.widget.Button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,12 +27,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.bibliotech.model.Estudiante
 import com.example.bibliotech.viewmodel.EstudianteViewModel
-import kotlin.coroutines.coroutineContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -182,7 +181,7 @@ fun PantallaAgregarEstudiante(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-
+            // Dropdown Sección
             ExposedDropdownMenuBox(
                 expanded = expandirSeccion,
                 onExpandedChange = { expandirSeccion = !expandirSeccion }
@@ -197,7 +196,9 @@ fun PantallaAgregarEstudiante(
                             expanded = expandirSeccion
                         )
                     },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .menuAnchor()
+                        .fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedTextColor = Color.White,
                         unfocusedTextColor = Color.White,
@@ -213,30 +214,6 @@ fun PantallaAgregarEstudiante(
                     onDismissRequest = { expandirSeccion = false }
                 ) {
                     secciones.forEach { opcion ->
-                        DropdownMenuItem(
-                            text = { Text(opcion) },
-                            onClick = {
-                                seccion = opcion
-                                expandirSeccion = false }
-                        ) }
-                    grados.forEach {
-                        DropdownMenuItem(
-                            text = {Text (it)},
-                            onClick = {
-                                grado = it
-                                expandirGrado= false
-                            }
-                        )
-
-                    }
-
-                    }
-
-                ExposedDropdownMenu(
-                    expanded = expandirSeccion,
-                    onDismissRequest = { expandirSeccion = false }
-                ) {
-                    grados.forEach { opcion ->
                         DropdownMenuItem(
                             text = { Text(opcion) },
                             onClick = {
@@ -250,94 +227,44 @@ fun PantallaAgregarEstudiante(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-
-            ExposedDropdownMenuBox(
-                expanded = expandirSeccion,
-                onExpandedChange = { expandirSeccion = !expandirSeccion }
+            // Estado Activo
+            Row(
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                OutlinedTextField(
-                    value = seccion,
-                    onValueChange = { },
-                    readOnly = true,
-                    label = { Text("Sección") },
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(
-                            expanded = expandirSeccion
-                        )
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedBorderColor = Color.Blue,
-                        unfocusedBorderColor = Color.LightGray,
-                        focusedLabelColor = Color.Blue,
-                        unfocusedLabelColor = Color.White
-                    )
-                )
-
-                ExposedDropdownMenu(
-                    expanded = expandirSeccion,
-                    onDismissRequest = { expandirSeccion = false }
-                ) {
-                    secciones.forEach { opcion ->
-                        DropdownMenuItem(
-                            text = { Text(opcion) },
-                            onClick = {
-                                seccion = opcion
-                                expandirSeccion = false }
-                        ) }
-                    grados.forEach {
-                        DropdownMenuItem(
-                            text = {Text (it)},
-                            onClick = {
-                                grado = it
-                                expandirSeccion= false
-                            }
-                        )
-
-                    }
-
-
-
-
-                }
-            }
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Row {
                 Checkbox(
                     checked = activo,
-                    onCheckedChange = {activo = it}
+                    onCheckedChange = { activo = it }
                 )
 
                 Text(
                     text = "Activo",
-                    color= Color.White,
-                    modifier = Modifier.padding(top = 8.dp)
+                    color = Color.White
                 )
             }
+
             Spacer(modifier = Modifier.height(10.dp))
 
+            // Botones
+            Button(
+                onClick = {
+                    val nuevoEstudiante = Estudiante(
+                        carnet = carnet,
+                        nombres = nombres,
+                        apellidos = apellidos,
+                        grado = grado,
+                        seccion = seccion,
+                        activo = activo
+                    )
 
-            //---- BOTONES----
-            Button(onClick= {
-                val nuevoEstudiante = Estudiante(
-                    carnet = carnet,
-                    nombres = nombres,
-                    apellidos = apellidos,
-                    grado = grado,
-                    seccion = seccion,
-                    activo = activo
-                )
-
-                viewModel.insertarEstudiante(nuevoEstudiante)
-                onGuardar()
-
-            },
+                    viewModel.insertarEstudiante(nuevoEstudiante)
+                    onGuardar()
+                },
                 modifier = Modifier.fillMaxWidth()
-                ) { Text("Guardar Estudiante")}
+            ) {
+                Text("Guardar Estudiante")
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             Button(
                 onClick = { onCancelar() },
@@ -346,5 +273,5 @@ fun PantallaAgregarEstudiante(
                 Text("Cancelar")
             }
         }
-     }
+    }
 }
