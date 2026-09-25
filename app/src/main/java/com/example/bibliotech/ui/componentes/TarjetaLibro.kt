@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bibliotech.R
@@ -26,10 +27,15 @@ import com.example.bibliotech.model.Libro
 @Composable
 fun TarjetaLibro(Libro: Libro, onVerDetalles: () -> Unit) {
 
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Column(modifier = Modifier.padding(12.dp)) {
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                verticalAlignment = Alignment.Top,
+                modifier = Modifier.fillMaxWidth()
+            ) {
 
                 Image(
                     painter = painterResource(id = R.drawable.vegeta_biblioteca),
@@ -40,18 +46,30 @@ fun TarjetaLibro(Libro: Libro, onVerDetalles: () -> Unit) {
 
                 Spacer(modifier = Modifier.width(12.dp))
 
-                Column {
+
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
                     Text(
                         text = Libro.titulo,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
-                    Text(text = "Autor: ${Libro.autor}")
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Autor: ${Libro.autor}",
+                        fontSize = 14.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // El botón se alinea siempre a la derecha
             Button(
                 onClick = onVerDetalles,
                 modifier = Modifier.align(Alignment.End)
