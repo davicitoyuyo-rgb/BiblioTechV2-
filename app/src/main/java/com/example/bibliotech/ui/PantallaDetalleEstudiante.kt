@@ -75,7 +75,7 @@ fun PantallaDetalleEstudiante(
 
             )
         }
-        //ss
+
     ) {padding ->
         Column(modifier = Modifier.padding(padding).fillMaxWidth()) {
 
