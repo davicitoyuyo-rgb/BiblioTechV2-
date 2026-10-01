@@ -32,7 +32,7 @@ class BibliotecaApplication : Application() {
     val prestamoDao
         get() = database.prestamoDao()
 
-    // CORREGIDO: Se cambió 'prestampRepository' por 'prestamoRepository'
+
     val prestamoRepository: PrestamoRepository by lazy {
         PrestamoRepository(prestamoDao)
     }
