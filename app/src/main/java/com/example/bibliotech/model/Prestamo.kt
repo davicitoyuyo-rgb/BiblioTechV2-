@@ -25,6 +25,6 @@ data class Prestamo(
     val idLibro: Int,
     val idEstudiante: Int,
     val fechaPrestamo: String,
-    val fechaDevolucion: String,
+    val fechaDevolucion: String? = null,
     val devuelto: Boolean=false
 )

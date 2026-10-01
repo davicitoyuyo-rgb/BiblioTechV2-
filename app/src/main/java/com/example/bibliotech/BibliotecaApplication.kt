@@ -6,6 +6,7 @@ import com.example.bibliotech.data.DatabaseProvider
 import com.example.bibliotech.data.EstudianteRepository
 import com.example.bibliotech.data.LibroRepository
 import com.example.bibliotech.data.LibrosPrueba
+import com.example.bibliotech.data.PrestamoRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -25,6 +26,15 @@ class BibliotecaApplication : Application() {
 
     val libroRepository: LibroRepository by lazy {
         LibroRepository(libroDao)
+    }
+
+    // Configuración para Préstamos
+    val prestamoDao
+        get() = database.prestamoDao()
+
+    // CORREGIDO: Se cambió 'prestampRepository' por 'prestamoRepository'
+    val prestamoRepository: PrestamoRepository by lazy {
+        PrestamoRepository(prestamoDao)
     }
 
     // Configuración para Estudiantes
@@ -48,7 +58,8 @@ class BibliotecaApplication : Application() {
             val libros = libroRepository.obtenerLibros()
             println("LIBROS EN ROOM: ${libros.size}")
             libros.forEachIndexed { indice, libro ->
-                println("Libro: ${indice + 1} - ${libro.titulo}")
+                // CORREGIDO: Sintaxis del salto de línea dentro del String
+                println("Libro ${indice + 1}: ${libro.titulo}")
             }
         }
     }
