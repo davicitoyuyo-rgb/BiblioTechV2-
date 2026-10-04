@@ -41,7 +41,7 @@ import com.example.bibliotech.model.Libro
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PantallaDetalleLibro(
-    Libro: Libro,
+    libro: Libro,
     onRegresar: () -> Unit,
     onEditar: (Int) -> Unit,
     onEliminar: (Libro) -> Unit,
@@ -84,7 +84,6 @@ fun PantallaDetalleLibro(
                 .padding(20.dp)
         ) {
 
-            // Se reemplaza el Icon por la Image de Vegeta
             Image(
                 painter = painterResource(id = R.drawable.vegeta_biblioteca),
                 contentDescription = "Logo Vegeta Biblioteca",
@@ -95,34 +94,34 @@ fun PantallaDetalleLibro(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = Libro.titulo,
+                text = libro.titulo,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "Autor: ${Libro.autor}",
+                text = "Autor: ${libro.autor}",
                 fontSize = 18.sp,
                 color = Color.White
             )
             Text(
-                text = "Categoría: ${Libro.categoria}",
+                text = "Categoría: ${libro.categoria}",
                 fontSize = 18.sp,
                 color = Color.White
             )
             Text(
-                text = "Año Publicación: ${Libro.anio}",
+                text = "Año Publicación: ${libro.anio}",
                 fontSize = 18.sp,
                 color = Color.White
             )
             Text(
-                text = "Descripción: ${Libro.descripcion}",
+                text = "Descripción: ${libro.descripcion}",
                 fontSize = 18.sp,
                 color = Color.White
             )
             Text(
-                text = "Disponibilidad: ${if (Libro.disponible) "Disponible" else "No disponible"}",
+                text = "Disponibilidad: ${if (libro.disponible) "Disponible" else "No disponible"}",
                 fontSize = 18.sp,
                 color = Color.White
             )
@@ -134,7 +133,7 @@ fun PantallaDetalleLibro(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Button(
-                    onClick = { onEditar(Libro.id) },
+                    onClick = { onEditar(libro.id) },
                     modifier = Modifier.weight(1f)
                 ) {
                     Text("Editar")
@@ -161,12 +160,12 @@ fun PantallaDetalleLibro(
                 AlertDialog(
                     onDismissRequest = { mostrarDialogo = false },
                     title = { Text("Confirmación") },
-                    text = { Text("¿Estás seguro de eliminar \"${Libro.titulo}\"?") },
+                    text = { Text("¿Estás seguro de eliminar \"${libro.titulo}\"?") },
                     confirmButton = {
                         Button(
                             onClick = {
                                 mostrarDialogo = false
-                                onEliminar(Libro)
+                                onEliminar(libro)
                             }
                         ) {
                             Text("Eliminar")

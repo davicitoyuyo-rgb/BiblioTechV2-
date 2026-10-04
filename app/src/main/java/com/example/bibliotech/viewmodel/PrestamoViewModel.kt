@@ -79,7 +79,7 @@ class PrestamoViewModel(aplication: Application) : AndroidViewModel(aplication) 
         }
     }
 
-    fun resetearEstadoGuardado() {
+    fun reiniciarEstadoGuardado() {
         _prestamoGuardado.value = false
     }
 }

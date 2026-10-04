@@ -58,7 +58,7 @@ class BibliotecaApplication : Application() {
             val libros = libroRepository.obtenerLibros()
             println("LIBROS EN ROOM: ${libros.size}")
             libros.forEachIndexed { indice, libro ->
-                // CORREGIDO: Sintaxis del salto de línea dentro del String
+
                 println("Libro ${indice + 1}: ${libro.titulo}")
             }
         }

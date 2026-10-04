@@ -55,7 +55,7 @@ fun Navegacion(
         composable("agregar") {
             PantallaAgregarLibro(
                 onGuardar = {
-                    mensaje = "Libro guardado con exito"
+                    mensaje = "Libro guardado con éxito"
                     navController.popBackStack()
                 },
                 onCancelar = { navController.popBackStack() },
@@ -80,12 +80,12 @@ fun Navegacion(
 
             libro?.let { libroActual ->
                 PantallaDetalleLibro(
-                    Libro = libroActual,
+                    libro = libroActual,
                     onRegresar = { navController.popBackStack() },
                     onEditar = { id -> navController.navigate("editar/$id") },
                     onEliminar = { libroEliminar ->
                         viewModel.eliminarLibro(libroEliminar)
-                        mensaje = "Libro eliminado con exito"
+                        mensaje = "Libro eliminado con éxito"
                         navController.popBackStack()
                     },
                     navController = navController
@@ -125,7 +125,11 @@ fun Navegacion(
 
         composable("prestamo") {
             PantallaPrestamo(
-                onRegresar = { navController.popBackStack() }
+                onRegresar = { navController.popBackStack() },
+                onPrestamoGuardado = {
+                    mensaje = "Préstamo realizado con éxito"
+                    navController.popBackStack()
+                }
             )
         }
 
@@ -155,7 +159,7 @@ fun Navegacion(
             PantallaAgregarEstudiante(
                 viewModel = viewModel,
                 onGuardar = {
-                    mensaje = "Estudiante guardado con exito"
+                    mensaje = "Estudiante guardado con éxito"
                     navController.popBackStack()
                 },
                 onCancelar = {
