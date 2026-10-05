@@ -19,6 +19,6 @@ interface PrestamoDao {
     suspend fun obtenerPrestamoPorId(id: Int): Prestamo?
 
     @Update
-    fun actualizarPrestamo(prestamo: Prestamo)
+    suspend fun actualizarPrestamo(prestamo: Prestamo)
 
 }

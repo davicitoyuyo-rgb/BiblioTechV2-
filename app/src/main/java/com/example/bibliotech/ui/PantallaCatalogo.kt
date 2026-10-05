@@ -70,7 +70,6 @@ fun PantallaCatalogo(
     )
     val libros by viewModel.libros.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.cargarLibros()
@@ -87,13 +86,16 @@ fun PantallaCatalogo(
     val categoria = listOf("Todas", "Literatura", "Novela", "Programacion")
     var categoriaSeleccionada by remember { mutableStateOf("Todas") }
 
-    val librosFiltrados = libros.filter { libro ->
-        val coincideTexto = libro.titulo.contains(textoBusqueda, ignoreCase = true) ||
-                libro.autor.contains(textoBusqueda, ignoreCase = true)
-        val coincideCategoria = categoriaSeleccionada == "Todas" ||
-                libro.categoria == categoriaSeleccionada
-        coincideTexto && coincideCategoria
-    }
+    // Se agrega distinctBy para evitar que se muestren libros repetidos
+    val librosFiltrados = libros
+        .distinctBy { it.titulo.lowercase().trim() }
+        .filter { libro ->
+            val coincideTexto = libro.titulo.contains(textoBusqueda, ignoreCase = true) ||
+                    libro.autor.contains(textoBusqueda, ignoreCase = true)
+            val coincideCategoria = categoriaSeleccionada == "Todas" ||
+                    libro.categoria == categoriaSeleccionada
+            coincideTexto && coincideCategoria
+        }
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -143,7 +145,6 @@ fun PantallaCatalogo(
                         .padding(top = 40.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    // Imagen de Vegeta cuando no hay resultados
                     Image(
                         painter = painterResource(id = R.drawable.vegeta_biblioteca),
                         contentDescription = "Sin resultados",

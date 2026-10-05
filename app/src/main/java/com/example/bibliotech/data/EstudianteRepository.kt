@@ -13,24 +13,23 @@ class EstudianteRepository(
 ) {
 
 
-    fun insertarEstudiante(estudiante: Estudiante): Long {
+    suspend fun insertarEstudiante(estudiante: Estudiante): Long {
         return estudianteDao.insertarEstudiante(estudiante)
     }
 
-
-    fun obtenerEstudiantes(): List<Estudiante> {
+    suspend fun obtenerEstudiantes(): List<Estudiante> {
         return estudianteDao.obtenerEstudiantes()
     }
 
-    fun obtenerEstudiantePorId(id: Int): Estudiante? {
+    suspend fun obtenerEstudiantePorId(id: Int): Estudiante? {
         return estudianteDao.obtenerEstudiantePorId(id)
     }
 
-    fun actualizarEstudiante(estudiante: Estudiante) {
+    suspend fun actualizarEstudiante(estudiante: Estudiante) {
         estudianteDao.actualizarEstudiante(estudiante)
     }
 
-    fun eliminarEstudiante(estudiante: Estudiante) {
+    suspend fun eliminarEstudiante(estudiante: Estudiante) {
         estudianteDao.eliminarEstudiante(estudiante)
     }
 

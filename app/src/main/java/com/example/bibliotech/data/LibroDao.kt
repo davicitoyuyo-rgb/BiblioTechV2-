@@ -11,16 +11,17 @@ import com.example.bibliotech.model.Libro
 interface LibroDao {
 
     @Insert
-    fun insertarLibro(libro: Libro): Long
+    suspend fun insertarLibro(libro: Libro): Long
 
     @Query("SELECT * FROM libros")
-    fun obtenerLibros(): List<Libro>
-    @Query("SELECT * FROM libros WHERE id= :id")
-    fun obtenerLibroPorId(id:Int): Libro?
+    suspend fun obtenerLibros(): List<Libro>
+
+    @Query("SELECT * FROM libros WHERE id = :id")
+    suspend fun obtenerLibroPorId(id: Int): Libro?
 
     @Update
-    fun actualizarLibro(Libro:Libro)
+    suspend fun actualizarLibro(libro: Libro)
 
     @Delete
-    fun eliminarLibro(Libro:Libro)
+    suspend fun eliminarLibro(libro: Libro)
 }

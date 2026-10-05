@@ -32,7 +32,6 @@ class BibliotecaApplication : Application() {
     val prestamoDao
         get() = database.prestamoDao()
 
-
     val prestamoRepository: PrestamoRepository by lazy {
         PrestamoRepository(prestamoDao)
     }
@@ -49,17 +48,27 @@ class BibliotecaApplication : Application() {
         super.onCreate()
 
         applicationScope.launch {
-            if (libroRepository.obtenerLibros().isEmpty()) {
+            val librosActuales = libroRepository.obtenerLibros()
+
+
+            if (librosActuales.isEmpty()) {
                 LibrosPrueba.forEach { libro ->
                     libroRepository.insertarLibro(libro)
                 }
+            } else {
+
+                librosActuales.forEach { libro ->
+                    if (!libro.disponible) {
+                        libroRepository.actualizarLibro(libro.copy(disponible = true))
+                    }
+                }
             }
 
+            // Confirmación en la consola/Logcat
             val libros = libroRepository.obtenerLibros()
             println("LIBROS EN ROOM: ${libros.size}")
             libros.forEachIndexed { indice, libro ->
-
-                println("Libro ${indice + 1}: ${libro.titulo}")
+                println("Libro ${indice + 1}: ${libro.titulo} - Disponible: ${libro.disponible}")
             }
         }
     }

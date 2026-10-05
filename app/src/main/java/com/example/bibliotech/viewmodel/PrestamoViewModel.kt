@@ -42,10 +42,13 @@ class PrestamoViewModel(aplication: Application) : AndroidViewModel(aplication) 
     fun cargarDatos() {
         viewModelScope.launch(Dispatchers.IO) {
             val libros = libroRepository.obtenerLibros()
+            // Filtra los libros disponibles y elimina duplicados por ID y por Título
             _librosDisponibles.value = libros.filter { it.disponible }
+                .distinctBy { it.titulo.lowercase().trim() }
 
             val estudiantes = estudianteRepository.obtenerEstudiantes()
             _estudiantesActivos.value = estudiantes.filter { it.activo }
+                .distinctBy { it.id }
 
             _prestamosActivos.value = prestamoRepository.obtenerPrestamosActivos()
         }
@@ -66,7 +69,6 @@ class PrestamoViewModel(aplication: Application) : AndroidViewModel(aplication) 
                 fechaPrestamo = fechaActual
             )
 
-
             prestamoRepository.insertar(nuevoPrestamo)
 
             val libroActualizado = libro.copy(disponible = false)
@@ -74,6 +76,8 @@ class PrestamoViewModel(aplication: Application) : AndroidViewModel(aplication) 
 
             val librosActualizados = libroRepository.obtenerLibros()
             _librosDisponibles.value = librosActualizados.filter { it.disponible }
+                .distinctBy { it.titulo.lowercase().trim() }
+
             _prestamosActivos.value = prestamoRepository.obtenerPrestamosActivos()
             _prestamoGuardado.value = true
         }
