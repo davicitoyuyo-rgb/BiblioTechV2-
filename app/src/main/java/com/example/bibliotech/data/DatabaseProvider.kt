@@ -1,4 +1,59 @@
-/*package com.example.bibliotech.data
+package com.example.bibliotech.data
+
+import android.content.Context
+import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.bibliotech.data.BibliotecaDatabase
+
+object DatabaseProvider {
+
+    private const val DATABASE_NAME = "bibliotech_database"
+
+    private val MIGRATION_3_4 = object : Migration(3, 4) {
+
+        override fun migrate(
+            database: SupportSQLiteDatabase
+        ) {
+
+            database.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS Usuarios (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                    nombre TEXT NOT NULL,
+                    usuario TEXT NOT NULL,
+                    contrasena TEXT NOT NULL
+                )
+                """.trimIndent()
+            )
+        }
+    }
+
+    @Volatile
+    private var INSTANCE: BibliotecaDatabase? = null
+
+    fun getDatabase(context: Context): BibliotecaDatabase {
+
+        return INSTANCE ?: synchronized(this) {
+
+            val instance =
+                Room.databaseBuilder(
+                    context.applicationContext,
+                    BibliotecaDatabase::class.java,
+                    DATABASE_NAME
+                )
+                    .addMigrations(MIGRATION_3_4)
+                    .build()
+
+            INSTANCE = instance
+
+            instance
+        }
+    }
+}
+
+/*
+package com.example.bibliotech.data
 
 import android.content.Context
 import androidx.room.Room
@@ -21,7 +76,10 @@ object DatabaseProvider {
             instance
         }
     }
-}*/
+}
+*/
+
+/*
 package com.example.bibliotech.data
 
 import android.content.Context
@@ -73,12 +131,12 @@ val MIGRATION_2_3 = object : Migration(2, 3) {
                 `fechaPrestamo` TEXT NOT NULL,
                 `fechaDevolucion` TEXT,
                 `devuelto` INTEGER NOT NULL,
-                
+
                 FOREIGN KEY(`estudianteId`) REFERENCES `Estudiantes`(`id`)
-                ON UPDATE NO ACTION 
+                ON UPDATE NO ACTION
                 ON DELETE NO ACTION,
-                
-                FOREIGN KEY(`libroId`) REFERENCES `Libros`(`id`) 
+
+                FOREIGN KEY(`libroId`) REFERENCES `Libros`(`id`)
                 ON UPDATE NO ACTION ON DELETE NO ACTION
             )
             """.trimIndent()
@@ -126,3 +184,4 @@ object DatabaseProvider {
         }
     }
 }
+*/
